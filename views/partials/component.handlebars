@@ -1,4 +1,4 @@
-<div class="post" image-filename="{{filename}}" image-number="{{@key}}">
+<div class="item" image-filename="{{filename}}" image-number="{{@key}}">
     <div class="image-container">
         {{#if isImage}}
             <img src="image/{{filename}}">
@@ -10,6 +10,6 @@
         <span class="image-info">#{{@key}}: <a href="image/{{filename}}">{{filename}}</a> </span>
     </div>
     <form method ="POST" action="/files/{{_id}}?_method=DELETE">
-        <button class="delete-button">Delete</button>
+        <button class="delete-button button">Delete</button>
     </form>
 </div>
