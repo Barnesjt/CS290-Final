@@ -1,13 +1,13 @@
 <div class="item" image-filename="{{filename}}" image-number="{{@key}}">
     <div class="image-container">
         {{#if isImage}}
-            <img src="image/{{filename}}">
+            <img src="view/{{filename}}" alt="{{filename}}">
         {{else}}
             <div class="filetype-display">{{fileType}}</div>
         {{/if}}
     </div>
     <div class="image-info-container">
-        <span class="image-info">#{{@key}}: <a href="image/{{filename}}">{{filename}}</a> </span>
+        <span class="image-info">#{{@key}}: <a href="view/{{filename}}">{{filename}}</a> </span>
     </div>
     <form method ="POST" action="/files/{{_id}}?_method=DELETE">
         <button class="delete-button button">Delete</button>

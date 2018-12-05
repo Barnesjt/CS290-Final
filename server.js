@@ -11,17 +11,9 @@ var gridfsstorage = require('multer-gridfs-storage');
 var grid = require('gridfs-stream');
 var methodOverride = require('method-override');
 
-/* var mongoHost = process.env.MONGO_HOST;
-var mongoPort = process.env.MONGO_PORT || '48319';
-var mongoUsername = process.env.MONGO_USERNAME;
 var mongoPassword = process.env.MONGO_PASSWORD;
-var mongoDBName = process.env.MONGO_DB_NAME;
 
-var mongoURL = "mongodb://" +
-  mongoUsername + ":" + mongoPassword + "@" + mongoHost + ":" + mongoPort +
-  "/" + mongoDBName; */
-
-var mongoURL = "mongodb://admin:barnesjt05@ds048319.mlab.com:48319/cs290";
+var mongoURL = "mongodb://admin:"+ mongoPassword +"@ds048319.mlab.com:48319/cs290";
 var mongoDB = null;
 
 var app = express();
@@ -63,7 +55,7 @@ storage = new gridfsstorage({
                 const filename = buf.toString('hex') + path.extname(file.originalname);
                 const fileInfo ={
                     filename: filename,
-                    bucketName: 'uploads'
+                    bucketName: 'uploads',
                 };
                 resolve(fileInfo);
             });
@@ -80,7 +72,7 @@ app.get('/', function (req, res, next) {
             res.render('homePage', {files:false});
         } else {
             files.map( function (file) {
-                if(file.contentType === 'image/jpeg' || files.contentType === 'image/png')
+                if(file.contentType === 'image/jpeg' || files.contentType === 'image/png' || file.contentType === 'image/gif')
                 {
                     file.isImage = true;
                 } else {
@@ -94,15 +86,13 @@ app.get('/', function (req, res, next) {
 });
 
 app.post('/upload', upload.single('file'), function(req, res, next) {
-//    res.json({file: req.file});
     res.redirect('/');
 });
 
 app.get('/files', function(req, res, next) {
     gfs.files.find().toArray( function (err, files) {
         if(!files || files.length===0) {
-            res.status(404).json({ err: 'No files exist' });
-            //res.status(404).render('404');
+            res.status(404).render('404');
         }
         return res.json(files);
     });
@@ -111,23 +101,20 @@ app.get('/files', function(req, res, next) {
 app.get('/files/:filename', function(req, res, next) {
     gfs.files.findOne({filename: req.params.filename}, function(err, file){
         if(!file) {
-            res.status(404).json({ err: 'No file exists' });
-            //res.status(404).render('404');
+            res.status(404).render('404');
+        } else { 
+            return res.json(file);
         }
-        return res.json(file);
     });
 });
 
-app.get('/image/:filename', function(req, res, next) {
+app.get('/view/:filename', function(req, res, next) {
     gfs.files.findOne({filename: req.params.filename}, function(err, file){
         if(!file) {
             res.status(404).render('404');
-        }
-        if(file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
+        } else {
             var readstream = gfs.createReadStream(file.filename);
             readstream.pipe(res);
-        } else {
-            res.status(404).json({ err: 'Not an image '});
         }
     });
 });

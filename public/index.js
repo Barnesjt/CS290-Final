@@ -11,4 +11,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var cancelButton = document.querySelector('.cancel-button');
     cancelButton.addEventListener('click', toggleUploadBox);
 
+/*     var deleteButton = document.querySelector('.delete-button');
+    deleteButton = addEventListener('hover') */
+
 });
