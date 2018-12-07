@@ -72,13 +72,13 @@ app.get('/', function (req, res, next) {
             res.render('homePage', {files:false});
         } else {
             files.map( function (file) {
-                if(file.contentType === 'image/jpeg' || files.contentType === 'image/png' || file.contentType === 'image/gif')
+                if(file.contentType === 'image/jpeg' || file.contentType === 'image/png' || file.contentType === 'image/gif')
                 {
                     file.isImage = true;
                 } else {
                     file.isImage = false;
                 }
-                    file.fileType = file.filename.split('.').pop();
+                  file.fileType = file.filename.split('.').pop();
             });
             res.render('homePage', {files:files});
         }
@@ -86,29 +86,33 @@ app.get('/', function (req, res, next) {
 });
 
 app.post('/upload', upload.single('file'), function(req, res, next) {
-    res.redirect('/');
+    res.redirect('/');  
 });
 
-app.get('/files', function(req, res, next) {
-    gfs.files.find().toArray( function (err, files) {
-        if(!files || files.length===0) {
-            res.status(404).render('404');
+app.post('/comment', function(req, res, next) {
+    req.body.filename;
+    req.body.comment;
+    if(req.body && req.body.filename && req.body.comment) {
+        var fileCollection = mongoDB.collection('uploads.files');
+        fileCollection.updateOne(
+        { filename: req.body.filename },
+        { $push: { comments: { time: Date.now(), content: req.body.comment } } },
+        function (err, result) {
+          if (err) {
+            res.status(500).send("Error to Database");
+          } else if (result.matchedCount > 0) {
+            res.redirect('/view/'+req.body.filename);
+          } else {
+            next();
+          }
         }
-        return res.json(files);
-    });
+      );
+    } else {
+        res.status(400).send("Request needs a body with a filename and a comment");
+    }
 });
 
-app.get('/files/:filename', function(req, res, next) {
-    gfs.files.findOne({filename: req.params.filename}, function(err, file){
-        if(!file) {
-            res.status(404).render('404');
-        } else { 
-            return res.json(file);
-        }
-    });
-});
-
-app.get('/view/:filename', function(req, res, next) {
+app.get('/file/:filename', function(req, res, next) {
     gfs.files.findOne({filename: req.params.filename}, function(err, file){
         if(!file) {
             res.status(404).render('404');
@@ -116,6 +120,28 @@ app.get('/view/:filename', function(req, res, next) {
             var readstream = gfs.createReadStream(file.filename);
             readstream.pipe(res);
         }
+    });
+});
+
+app.get('/view/:filename', function(req, res, next) {
+    gfs.files.findOne({filename: req.params.filename}, function (err, file) {
+        if(!file) {
+            res.status(404).render('404');
+        } else {
+            if(file.contentType === 'image/jpeg' || file.contentType === 'image/png' || file.contentType === 'image/gif'){
+                file.isImage = true;
+            } else {
+                file.isImage = false;
+            }
+            file.fileType = file.filename.split('.').pop();
+        }
+        res.render('singleView', {
+            files:{file},
+            helpers: {
+                readableTime: function(inputTime) {
+                    return new Date(inputTime).toLocaleTimeString()
+                }
+            }});
     });
 });
 

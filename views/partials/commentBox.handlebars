@@ -1,0 +1,10 @@
+<div class="comment-display-container">
+    {{#each comments}}
+        {{>commentDisplay}}
+    {{/each}}
+
+    <div class="add-comment">
+        <textarea id="add-comment-input" rows="6"></textarea>
+        <button type="button" id="submit-button" class="button">Add Comment</button>
+    </div>
+</div>

@@ -35,6 +35,7 @@ header {
     font-size: 12px;
     font-weight: 900;
     font-family: 'Titillium-Web', 'sans-serif';
+    margin: 10px;
 }
 
 .new-upload-button{
@@ -184,4 +185,96 @@ header {
     height: 30px;
     color: #000000;
     font-size: 14px;
+}
+
+.comment-button:hover{
+    background-color: lime;
+    width: 85px;
+    height: 30px;
+    color: #000000;
+    font-size: 14px;
+}
+
+.comment-button a{
+    color: #444444;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.link-button a{
+    color: #444444;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.link-button{
+    align-items: center;
+}
+
+.link-button:hover{
+    background-color:lime;
+    width: 85px;
+    height: 30px;
+    color: #000000;
+    font-size: 14px;
+}
+
+.comment-display-container{
+    position: absolute;
+    left: 400px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    border: 5px solid #444444;
+    margin: 0px;
+    border-radius: 3px;
+}
+
+.comment-box-container{
+    width: auto;
+    background-color: #d6d6d6;
+    margin: 20px;
+    padding: 30px;
+    border: 3px solid #444444;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 9px;
+}
+
+.comment-box-info{
+    font-size: 10px;
+    color: #444444;
+    border-bottom: 2px solid #444444;
+}
+
+.add-comment{
+    width: auto;
+    background-color: #d6d6d6;
+    margin: 20px;
+    padding: 30px;
+    border: 3px solid #444444;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 9px;
+    display: flex;
+    justify-items: center;
+}
+
+#add-comment-input{
+    width: 90%;
+}
+
+#submit-button{
+    width: 160px;
+    height: 60px;
+    font-size: 20px;
+}
+
+#submit-button:hover{
+    background-color: lime;
+    font-size: 22px;
+    color: #000000;
+
 }
