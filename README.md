@@ -1,14 +1,13 @@
 # final-project-cs290-group-21
-##Write a web app that satisfies all of these requirements:
 
-#The app uses HTML and CSS to implement a well-designed client interface.
+Uploads a file from your computer
 
-#The app uses client-side JS to enable relevant user interactions with the client interface.
+Homepage displays all the files, when an image is present it'll give you a thumbnail
 
-#The app is served using a Node.js-based (or other approved) serving stack.
+Each tile has a button to directly link to the file, link to a page with comments, or to delete the file (no confirmation prompt)
 
-#The app dynamically generates pages based on data stored in a back end data store, such as MongoDB.
+On the single view page for each file, any comments will be displayed along with the time they were posted, and an option is given to add more comments.
 
-#The app’s client interface communicates with the app’s server to create, read, update, and/or delete content in the back end data store.
+Simple little file depot/image board concept.
 
-Within those boundaries, your team may write any kind of web app you want. 
+I used Express, Handlebars, Mongodb, Multer, GridFS, and Method Override
