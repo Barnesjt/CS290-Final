@@ -1,4 +1,8 @@
-# final-project-cs290-group-21
+# CS290 Final Project
+
+I recieved full credit on this project, finishing the class with over 100%.
+
+## What This Project Does:
 
 Uploads a file from your computer
 
